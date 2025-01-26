@@ -1,43 +1,47 @@
 package com.society.controller;
 
-import com.society.service.OAuthService;
+import com.society.entity.PaymentLink;
+import com.society.service.RazorpayService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Customizer;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/payment")
 @CrossOrigin(origins = "http://localhost:4200")
-public class AuthController {
-    private final ClientRegistrationRepository clientRegistrationRepository;
+public class PaymentController {
 
-    public AuthController(ClientRegistrationRepository clientRegistrationRepository) {
-        this.clientRegistrationRepository = clientRegistrationRepository;
-    }
+    @Autowired
+    private RazorpayService razorpayService;
 
     @GetMapping
-    public void authLogin(){
-        Map<String,Object> model = new HashMap<String,Object>();
-        model.put("id", UUID.randomUUID().toString());
-        model.put("content", "Hello World");
-        System.out.println(model);
+    public ResponseEntity<PaymentLink> payment(@RequestParam("amount") int amount){
+        try {
+            String receiptId = "receipt_" + System.currentTimeMillis();
+            String orderId = razorpayService.createOrder(amount, receiptId);
+            String paymentUrl = razorpayService.createPaymentLinkWithOrder(orderId, "siddharthkwani532@gmail.com", "9009120289", amount);
+            PaymentLink paymentLink=new PaymentLink(paymentUrl);
+            return new ResponseEntity<>(paymentLink, HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error initiating payment: " + e.getMessage());
+        }
     }
 
-    @GetMapping("/user")
-    public void authRedirect() {
-        Map<String,Object> model = new HashMap<String,Object>();
-        model.put("id", UUID.randomUUID().toString());
-        model.put("content", "Hello World");
-        System.out.println(model);
+    @GetMapping("/callback")
+    public String callback(@RequestParam Map<String, String> queryParams){
+        String paymentStatus = queryParams.get("razorpay_payment_id") != null ? "Success" : "Failure";
+
+        if ("Success".equals(paymentStatus)) {
+            return "Payment successful! Your payment ID is: " + queryParams.get("razorpay_payment_id");
+        } else {
+            return "Payment failed. Please try again.";
+        }
     }
 
 }

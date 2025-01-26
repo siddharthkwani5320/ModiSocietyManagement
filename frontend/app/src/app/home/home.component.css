@@ -1,0 +1,65 @@
+#hero {
+  position: relative;
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#hero h2 {
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#hero p {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+#hero a {
+  transition: transform 0.3s ease;
+}
+
+#hero a:hover {
+  transform: scale(1.1);
+}
+
+/* Add hover effects to the amenities section */
+#amenities .p-6 {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#amenities .p-6:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Add styling to gallery images */
+#gallery img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Customize form fields */
+form input, form textarea {
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus, form textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+form button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+form button:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+footer p {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}

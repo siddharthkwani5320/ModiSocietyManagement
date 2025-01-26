@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modi Housing Society</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-blue-900 text-white py-6 shadow-md">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-3xl font-bold">Modi Housing Society</h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#about" class="hover:underline">About Us</a></li>
+                    <li><a href="#amenities" class="hover:underline">Amenities</a></li>
+                    <li><a href="#gallery" class="hover:underline">Gallery</a></li>
+                    <li><a href="#contact" class="hover:underline">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="space-x-4">
+                <a routerLinkActive="active" routerLink="/login" class="bg-white text-blue-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100">Login</a>
+                <a routerLinkActive="active" routerLink="/login" class="bg-blue-700 px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="hero" class="bg-cover bg-center h-[500px]" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv628otAhTKncF-lE7yWDRoUhMTlF-StHr7w&s');">
+        <div class="bg-black bg-opacity-50 h-full flex items-center justify-center">
+            <div class="text-center text-white">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Modi Housing Society</h2>
+                <p class="text-xl md:text-2xl mb-6">Experience luxurious living like never before</p>
+                <a href="#contact" class="bg-blue-700 px-6 py-3 rounded-full text-white font-medium hover:bg-blue-800">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">About Us</h2>
+            <p class="text-gray-700 text-lg leading-7 text-center max-w-3xl mx-auto">
+                Modi Housing Society is a premium residential community offering state-of-the-art facilities and a serene environment. Nestled in the heart of the city, our society provides a blend of modern living and natural tranquility.
+            </p>
+        </div>
+    </section>
+
+    <section id="amenities" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">Amenities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                    <h3 class="text-xl font-bold mb-4">Swimming Pool</h3>
+                    <p class="text-gray-600">Relax and unwind in our state-of-the-art swimming pool.</p>
+                </div>
+                <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                    <h3 class="text-xl font-bold mb-4">Gymnasium</h3>
+                    <p class="text-gray-600">Stay fit with our modern fitness facilities.</p>
+                </div>
+                <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                    <h3 class="text-xl font-bold mb-4">Community Hall</h3>
+                    <p class="text-gray-600">Host events and gatherings in our spacious hall.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">Gallery</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZSUF5hr7k3LYVmnG9Sg936gQdFP68UBvJ9w&s" alt="Gallery Image" class="rounded-lg shadow-md">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1Mr3-PJoZoW7tI1Lr15nJOpvuIYBQa4xiKQ&s" alt="Gallery Image" class="rounded-lg shadow-md">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEskSAmO4gjnZkjc0Jdd3Ozn1wwNLr0T8D8w&s" alt="Gallery Image" class="rounded-lg shadow-md">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq9EvkShE0Cc4Wt2p8eBHiSBBXMSwbLuHj2Q&s" alt="Gallery Image" class="rounded-lg shadow-md">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHxGCKFnIelyUWOwQXLB9StLjG3NLZR53flw&s" alt="Gallery Image" class="rounded-lg shadow-md">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXyv8P02TYoqisL1-zPb9iZbeYuJJTLNQXqw&s" alt="Gallery Image" class="rounded-lg shadow-md">
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-blue-900 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Modi Housing Society. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

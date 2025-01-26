@@ -1,0 +1,19 @@
+<div class="payment-container">
+  <h1>Pay Society Maintenance</h1>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="amount">Enter Amount (INR):</label>
+      <input
+        type="number"
+        id="amount"
+        formControlName="amount"
+        placeholder="Enter amount to pay"
+        required
+      />
+      <div *ngIf="paymentForm.get('amount')?.invalid && paymentForm.get('amount')?.touched" class="error">
+        Please enter a valid amount.
+      </div>
+    </div>
+    <button type="submit" [disabled]="paymentForm.invalid" class="pay-now-btn">Pay Now</button>
+  </form>
+</div>
