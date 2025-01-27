@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="modiSocietyApp">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modi Society User Dashboard</title>
 </head>
-<body>
+<body ng-controller="DashboardController as dashboardCtrl">
+
   <header>
     <div class="user-info">
-      <img src="https://via.placeholder.com/40" alt="User Avatar">
+      <img src="{{picture}}" alt="User Avatar">
       <span>{{username}}</span>
     </div>
     <h1>Modi Society Dashboard</h1>

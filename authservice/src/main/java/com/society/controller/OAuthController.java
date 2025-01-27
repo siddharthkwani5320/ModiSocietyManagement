@@ -1,37 +1,92 @@
 package com.society.controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.society.entity.User;
+import com.society.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.security.Principal;
+import java.beans.Transient;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:4200")
 public class OAuthController  {
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String clientId;
+
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String clientSecret;
+
+    @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+    private String redirectUri;
+
+    @Value("${spring.security.oauth2.client.provider.google.token-uri}")
+    private String tokenUri;
+
+    @Value("${spring.security.oauth2.client.provider.google.user-info-uri}")
+    private String userInfoUri;
+
+    private HttpClient httpClient;
+    private ObjectMapper objectMapper;
+
+    public OAuthController() {
+        this.httpClient = HttpClient.newHttpClient();
+        this.objectMapper = new ObjectMapper();
+    }
+
+    @Transactional
     @GetMapping("/redirect")
-    public void redirect(HttpServletResponse response){
+    public void oauthCallBack(@RequestParam("code") String code,HttpServletResponse httpResponse) throws Exception {
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("code", code);
+        requestBody.put("client_id", clientId);
+        requestBody.put("client_secret", clientSecret);
+        requestBody.put("redirect_uri", redirectUri);
+        requestBody.put("grant_type", "authorization_code");
+
+        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
+
+        HttpRequest tokenRequest = HttpRequest.newBuilder()
+                .uri(URI.create(this.tokenUri))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBodyJson))
+                .build();
+
+        HttpResponse<String> tokenResponse = httpClient.send(tokenRequest, HttpResponse.BodyHandlers.ofString());
+        Map<String, Object> tokens = objectMapper.readValue(tokenResponse.body(), Map.class);
+
+        String accessToken = (String) tokens.get("access_token");
+
+        HttpRequest userInfoRequest = HttpRequest.newBuilder()
+                .uri(URI.create(userInfoUri + "?access_token=" + accessToken))
+                .GET()
+                .build();
+
+        HttpResponse<String> userInfoResponse = httpClient.send(userInfoRequest, HttpResponse.BodyHandlers.ofString());
+        User user = objectMapper.readValue(userInfoResponse.body(), User.class);
+        user.setId(UUID.randomUUID().toString());
         try {
-            response.sendRedirect("http://localhost:4200/user");
+            userRepository.findByName(user.getName());
         }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("Error redirect");
+            userRepository.save(user);
         }
+
+        httpResponse.sendRedirect("http://localhost:4200/user");
     }
 }

@@ -1,0 +1,12 @@
+CREATE TABLE USER(
+name VARCHAR(256),
+id VARCHAR(36),
+phone_number VARCHAR(15),
+image TEXT
+)ENGINE=InnoDB;
+
+CREATE TABLE PAYMENTORDER(
+orderId VARCHAR(256),
+status int,
+created_at DATETIME
+)ENGINE=InnoDB;

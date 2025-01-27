@@ -1,11 +1,35 @@
 package com.society.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
-    String name;
+    @Id
     String id;
+    String name;
     String phoneNumber;
-    String emailId;
-    String image;
+    String email;
+    String picture;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 
     public String getName() {
         return name;
@@ -31,19 +55,5 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmailId() {
-        return emailId;
-    }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

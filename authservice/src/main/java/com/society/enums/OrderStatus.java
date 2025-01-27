@@ -1,7 +1,5 @@
 package com.society.enums;
 
-import com.society.entity.Order;
-
 public enum OrderStatus {
     CREATED(1),
     COMPLETED(2),

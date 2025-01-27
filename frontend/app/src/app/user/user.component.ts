@@ -9,12 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponent implements OnInit {
 
   username = "siddharth"
+  picture= "https://lh3.googleusercontent.com/a/ACg8ocLHwjAefwhf3P2dzkaH4VETxAiXEmywU8gMItdzNYWvHhaB990Q=s96-c"
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get("localhost:8080/api/user").subscribe(response=>{
-      console.log(response)
-    })
-  }
 
+  }
 }
